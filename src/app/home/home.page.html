@@ -63,6 +63,7 @@
                   <ng-template #toDo>
                     <ion-label>{{ task.description }}</ion-label>
                   </ng-template>
+                  <ion-badge slot="end" color="success" *ngIf="task.completedAt">{{ task.completedAt.substring(0, 10) }}</ion-badge>
                 </ion-item>
                 <ion-item-options side="end" *ngIf="!task.completedAt">
                   <ion-item-option color="light" (click)="taskEdit(task, slidingItem)">
