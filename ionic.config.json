@@ -1,0 +1,7 @@
+{
+  "name": "taskeeApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
