@@ -6,25 +6,26 @@
           <ion-card-header>
             <ion-card-title>
               <ion-item>
-                <ion-icon name="lock-closed-outline"></ion-icon>
-                Access your account
+                <ion-icon name="person-circle-outline"></ion-icon>
+                Create your account
               </ion-item>
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <form [formGroup]="form">
+              <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>
               <ion-input type="text" placeholder="E-mail" formControlName="email"></ion-input>
               <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
               <ion-grid>
                 <ion-row>
                   <ion-col>
-                    <ion-button expand="full" [disabled]="!form.valid" (click)="onSubmit()">
-                      Login
+                    <ion-button expand="full" [disabled]="!form.valid" color="success" (click)="onSubmit()">
+                      Register now
                     </ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand="full" color="success" routerLink="/signup">
-                      Sign up now
+                    <ion-button expand="full" routerLink="/login">
+                      Back to login
                     </ion-button>
                   </ion-col>
                 </ion-row>

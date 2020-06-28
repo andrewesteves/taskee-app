@@ -3,6 +3,9 @@
     <ion-title>
       Taskee
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="log-out-outline" size="large" (click)="logout()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,6 +14,9 @@
     <ion-toolbar>
       <ion-title size="large">Taskee</ion-title>
     </ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-icon name="log-out-outline" size="large" (click)="logout()"></ion-icon>
+    </ion-buttons>
   </ion-header>
 
   <ion-card *ngIf="newProject">

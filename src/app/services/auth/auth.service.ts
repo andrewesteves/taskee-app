@@ -47,12 +47,12 @@ export class AuthService {
    * @return {void} 
    */
   async logout(): Promise<void> {
-    await this.storage.remove(StorageEnum.User);
     await this.http.post(`${this.url}/users/logout`, {}).pipe(
       map(
         (data: UserEntity) => data
       )
     ).toPromise();
+    await this.storage.remove(StorageEnum.User);
   }
 
   /**

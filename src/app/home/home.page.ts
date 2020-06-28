@@ -4,6 +4,8 @@ import { ProjectsService } from '../services/projects/projects.service';
 import { TaskEntity } from '../entities/task.entity';
 import { TasksService } from '../services/tasks/tasks.service';
 import { IonItemSliding, IonInput } from '@ionic/angular';
+import { AuthService } from '../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +21,8 @@ export class HomePage implements OnInit {
   constructor(
     private projectsService: ProjectsService,
     private tasksService: TasksService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   /**
@@ -223,6 +227,20 @@ export class HomePage implements OnInit {
   async projectUpdate(): Promise<void> {
     try {
       await this.projectsService.update(this.newProject);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Logout
+   * 
+   * @return {void}
+   */
+  async logout(): Promise<void> {
+    try {
+      await this.authService.logout();
+      this.router.navigate(['/login']);
     } catch (error) {
       console.error(error);
     }
