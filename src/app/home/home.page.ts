@@ -13,6 +13,7 @@ import { IonItemSliding, IonInput } from '@ionic/angular';
 export class HomePage implements OnInit {
 
   projects: ProjectEntity[];
+  newProject: ProjectEntity;
 
   constructor(
     private projectsService: ProjectsService,
@@ -58,6 +59,9 @@ export class HomePage implements OnInit {
       this.projects = this.projects.map((p: ProjectEntity) => {
         if (p.ID != project.ID) {
           return p;
+        }
+        if (!p.tasks) {
+          p.tasks = [];
         }
         p.tasks.push(taskDB);
         return p;
@@ -117,6 +121,30 @@ export class HomePage implements OnInit {
       });
 
       slidingItem.close();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Show form to create or edit a project
+   * 
+   * @return {void}
+   */
+  projectForm() {
+    this.newProject = new ProjectEntity();
+  }
+
+  /**
+   * Create a new project resource
+   * 
+   * @return {void}
+   */
+  async projectStore(): Promise<void> {
+    try {
+      const projectDB = (await this.projectsService.store(this.newProject)).project;
+      this.projects.push(projectDB);
+      this.newProject = null;
     } catch (error) {
       console.error(error);
     }

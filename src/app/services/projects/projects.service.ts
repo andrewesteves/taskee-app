@@ -29,4 +29,22 @@ export class ProjectsService {
       ).toPromise();
     return response;
   }
+
+  /**
+   * Create a new resource
+   * 
+   * @param {ProjectEntity} project
+   * @return {Promise} 
+   */
+  async store(project: ProjectEntity): Promise<{ project, ProjectEntity, message: string }> {
+    const response = this.http.post(`${this.url}`, {
+      'description': project.description,
+    })
+      .pipe(
+        map(
+          (data: { project, ProjectEntity, message: string }) => data,
+        )
+      ).toPromise();
+    return response;
+  }
 }
