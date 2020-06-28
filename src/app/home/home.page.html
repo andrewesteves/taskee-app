@@ -15,13 +15,13 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6">
+      <ion-col size="6" *ngFor="let project of projects">
         <ion-card>
           <ion-card-header>
             <ion-card-title>
               <ion-item>
                 <ion-icon name="cafe-outline"></ion-icon>
-                Project
+                {{ project.description }}
                 <ion-buttons slot="end">
                   <ion-button>
                     <ion-icon name="create-outline"></ion-icon>
