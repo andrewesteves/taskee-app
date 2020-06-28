@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { environment as ENV } from '../../../environments/environment';
 import { ProjectEntity } from 'src/app/entities/project.entity';
 import { map } from 'rxjs/operators';

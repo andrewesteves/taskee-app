@@ -36,7 +36,7 @@
 
           <ion-card-content>
             <ion-list lines="none">
-              <ion-item-sliding *ngFor="let task of project.tasks">
+              <ion-item-sliding *ngFor="let task of project.tasks" #slidingItem>
                 <ion-item>
                   <ion-label *ngIf="task.completedAt; else toDo">
                     <s>{{ task.description }}</s>
@@ -52,12 +52,12 @@
                     </ion-button>
                   </ion-item-option>
                   <ion-item-option color="light">
-                    <ion-button color="danger">
+                    <ion-button color="danger" (click)="taskDestroy(task, slidingItem)">
                       <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                   </ion-item-option>
                   <ion-item-option color="light">
-                    <ion-button color="success">
+                    <ion-button color="success" (click)="taskDone(task, slidingItem)">
                       <ion-icon name="checkmark-outline"></ion-icon>
                     </ion-button>
                   </ion-item-option>
@@ -66,8 +66,8 @@
             </ion-list>
 
             <ion-item>
-              <ion-input type="text" placeholder="New Task"></ion-input>
-              <ion-button slot="end">Add</ion-button>
+              <ion-input type="text" #newTask placeholder="New Task"></ion-input>
+              <ion-button slot="end" (click)="taskStore(project, newTask)">Add</ion-button>
             </ion-item>
           </ion-card-content>
         </ion-card>
