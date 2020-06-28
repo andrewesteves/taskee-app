@@ -14,6 +14,7 @@ export class HomePage implements OnInit {
 
   projects: ProjectEntity[];
   newProject: ProjectEntity;
+  newTask: TaskEntity;
 
   constructor(
     private projectsService: ProjectsService,
@@ -127,12 +128,61 @@ export class HomePage implements OnInit {
   }
 
   /**
-   * Show form to create or edit a project
+   * Edit task resource
    * 
+   * @param {TaskEntity} task
+   * @param {IonItemSliding} slidingItem
    * @return {void}
    */
-  projectForm() {
-    this.newProject = new ProjectEntity();
+  async taskEdit(task: TaskEntity, slidingItem: IonItemSliding): Promise<void> {
+    try {
+      this.newTask = task;
+      slidingItem.close();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Update task resource
+   * 
+   * @param {IonInput} task
+   * @return {void}
+   */
+  async taskUpdate(task: IonInput): Promise<void> {
+    try {
+      this.newTask.description = task.value.toString();
+      await this.tasksService.update(this.newTask);
+      this.projects = this.projects.map((p: ProjectEntity) => {
+        if (p.ID != this.newTask.ProjectID) {
+          return p;
+        }
+        p.tasks = p.tasks.map((t: TaskEntity) => {
+          if (t.ID == this.newTask.ID) {
+            t.description = this.newTask.description;
+          }
+          return t;
+        });
+        return p;
+      });
+      this.newTask = null;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Show form to create or edit a project
+   * 
+   * @param {ProjectEntity} project
+   * @return {void}
+   */
+  projectForm(project?: ProjectEntity) {
+    if (project) {
+      this.newProject = project;
+    } else {
+      this.newProject = new ProjectEntity();
+    }
   }
 
   /**
@@ -145,6 +195,34 @@ export class HomePage implements OnInit {
       const projectDB = (await this.projectsService.store(this.newProject)).project;
       this.projects.push(projectDB);
       this.newProject = null;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Destroy project resource
+   * 
+   * @param {ProjectEntity} project
+   * @return {void}
+   */
+  async projectDestroy(project: ProjectEntity): Promise<void> {
+    try {
+      await this.projectsService.destroy(project);
+      this.projects = this.projects.filter((p: ProjectEntity) => p.ID != project.ID);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  /**
+   * Update project resource
+   * 
+   * @return {void}
+   */
+  async projectUpdate(): Promise<void> {
+    try {
+      await this.projectsService.update(this.newProject);
     } catch (error) {
       console.error(error);
     }

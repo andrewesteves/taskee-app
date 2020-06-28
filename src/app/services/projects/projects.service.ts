@@ -47,4 +47,36 @@ export class ProjectsService {
       ).toPromise();
     return response;
   }
+
+  /**
+   * Update a resource
+   * 
+   * @param {ProjectEntity} project
+   * @return {Promise} 
+   */
+  async update(project: ProjectEntity): Promise<{ message: string }> {
+    const response = this.http.put(`${this.url}/${project.ID}`, project)
+      .pipe(
+        map(
+          (data: { message: string }) => data,
+        )
+      ).toPromise();
+    return response;
+  }
+
+  /**
+   * Remove a resource
+   * 
+   * @param {ProjectEntity} project
+   * @return {Promise} 
+   */
+  async destroy(project: ProjectEntity): Promise<{ message: string }> {
+    const response = this.http.delete(`${this.url}/${project.ID}`)
+      .pipe(
+        map(
+          (data: { message: string }) => data,
+        )
+      ).toPromise();
+    return response;
+  }
 }

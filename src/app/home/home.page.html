@@ -19,7 +19,8 @@
       <ion-card-content>
         <ion-item>
           <ion-input type="text" placeholder="Description" [(ngModel)]="newProject.description"></ion-input>
-          <ion-button slot="end" (click)="projectStore()">Save</ion-button>
+          <ion-button slot="end" *ngIf="!newProject.ID" color="success" (click)="projectStore()">Save</ion-button>
+          <ion-button slot="end" *ngIf="newProject.ID" (click)="projectUpdate()">Edit</ion-button>
         </ion-item>
       </ion-card-content>
     </ion-card-header>
@@ -35,10 +36,10 @@
                 <ion-icon name="cafe-outline"></ion-icon>
                 {{ project.description }}
                 <ion-buttons slot="end">
-                  <ion-button>
+                  <ion-button (click)="projectForm(project)">
                     <ion-icon name="create-outline"></ion-icon>
                   </ion-button>
-                  <ion-button>
+                  <ion-button (click)="projectDestroy(project)">
                     <ion-icon name="trash-outline"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -58,7 +59,7 @@
                   </ng-template>
                 </ion-item>
                 <ion-item-options side="end" *ngIf="!task.completedAt">
-                  <ion-item-option color="light">
+                  <ion-item-option color="light" (click)="taskEdit(task, slidingItem)">
                     <ion-button>
                       <ion-icon name="create-outline"></ion-icon>
                     </ion-button>
@@ -77,9 +78,14 @@
               </ion-item-sliding>
             </ion-list>
 
-            <ion-item>
+            <ion-item *ngIf="!newTask || newTask?.ProjectID != project.ID">
               <ion-input type="text" #newTask placeholder="New Task"></ion-input>
               <ion-button slot="end" (click)="taskStore(project, newTask)">Add</ion-button>
+            </ion-item>
+
+            <ion-item *ngIf="newTask && newTask?.ProjectID == project.ID">
+              <ion-input type="text" #upTask [value]="newTask.description"></ion-input>
+              <ion-button slot="end" (click)="taskUpdate(upTask)">Edit</ion-button>
             </ion-item>
           </ion-card-content>
         </ion-card>
